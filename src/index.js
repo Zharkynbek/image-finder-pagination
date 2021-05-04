@@ -1,5 +1,6 @@
 import refs from './js/refs';
 import './styles.css';
+import * as basicLightbox from 'basiclightbox';
 import './basicLightBox.min.css';
 import tmpl from './templates/tmpl.hbs';
 import { error } from '@pnotify/core';
@@ -12,6 +13,15 @@ const requestParams = {
   query: '',
   page: 1,
 };
+
+function modal(e) {
+  if (e.target.nodeName === 'IMG') {
+    const instance = basicLightbox.create(
+      `<img src=${e.target.dataset.source} width="800" height="600">`,
+    );
+    instance.show();
+  }
+}
 
 function formSearch(e) {
   e.preventDefault();
@@ -48,15 +58,6 @@ function formSearch(e) {
     },
   });
   refs.input.value = '';
-}
-
-function modal(e) {
-  if (e.target.nodeName === 'IMG') {
-    const instance = basicLightbox.create(
-      `<img src=${e.target.dataset.source} width="800" height="600">`,
-    );
-    instance.show();
-  }
 }
 
 refs.form.addEventListener('submit', formSearch);
